@@ -1,0 +1,2040 @@
+swagger: "2.0"
+info:
+  description: "Booking API's Documentation"
+  version: "1.0.0"
+  title: "Swagger Booking API"
+  termsOfService: "Terms"
+  contact:
+    email: "ebarahona@utn.ac.cr"
+host: "localhost:5001"
+basePath: "/booking_api"
+tags:
+  - name: "Country"
+    description: "All Country's Endpoints"
+  - name: "Area"
+    description: "All Area's Endpoints"
+  - name: "Category"
+    description: "All Category's Endpoints"
+  - name: "Site"
+    description: "All Site's Endpoints"
+  - name: "Item"
+    description: "All Item's Endpoints"
+  - name: "Booking"
+    description: "All Booking's Endpoints"
+schemes:
+  - "https"
+  - "http"
+definitions:
+  Response:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/CountryGet"
+      message:
+        type: string
+        example: "Successfully requested"
+      message_code:
+        type: string
+        example: "OK_MSG"
+  ErrorResponse:
+    type: object
+    properties:
+      data:
+        type: string
+        example: null
+      message:
+        type: string
+      message_code:
+        type: string
+  InvalidIdErrorResponse:
+    type: object
+    properties:
+      data:
+        type: string
+        example: null
+      message:
+        type: string
+        example: "Invalid Id"
+      message_code:
+        type: string
+        example: "INVALID_ID"
+  InternalErrorResponse:
+    type: object
+    properties:
+      data:
+        type: string
+        example: null
+      message:
+        type: string
+        example: "Internal server error"
+      message_code:
+        type: string
+        example: "INTERNAL_SERVER_ERROR_MSG"
+  CountryGet:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: "6189877e7681e5967c5f03a1"
+      name:
+        type: string
+        example: "Costa Rica"
+      is_active:
+        type: boolean
+        example: true
+      code:
+        type: string
+        example: "659"
+  CountryPost:
+    type: object
+    required:
+      - "name"
+      - "code"
+    properties:
+      name:
+        type: string
+        example: "Costa Rica"
+      is_active:
+        type: boolean
+        example: true
+      code:
+        type: string
+        example: "659"
+  AreaGet:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: "61896ed633fa6f555e7c5c1c"
+      floor:
+        example: "2"
+      name:
+        type: string
+        example: "Volcan Poas (CR)"
+      site:
+        $ref: "#/definitions/SiteGet"
+      is_active:
+        type: boolean
+        example: true
+  AreaPost:
+    type: object
+    required:
+      - "floor"
+      - "name"
+      - "site_id"
+    properties:
+      floor:
+        type: string
+        example: "2"
+      name:
+        type: string
+        example: "Volcan Poas (CR)"
+      site_id:
+        type: string
+        example: "61896e3233fa6f555e7c5c08"
+      is_active:
+        type: boolean
+        example: true
+  CategoryGet:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: 6218d9b089c57040fd9e8086
+      name:
+        type: string
+        example: Meeting Room
+      is_active:
+        type: boolean
+        example: "true"
+      open_time:
+        type: string
+        example: "07:00"
+      close_time:
+        type: string
+        example: "17:00"
+      time_span:
+        type: integer
+        example: 30
+      available_days:
+        type: array
+        items:
+          type: string
+        example:
+          - "Mon"
+          - "Tue"
+          - "Wed"
+          - "Thu"
+          - "Fri"
+      area:
+        type: array
+        items:
+          $ref: "#/definitions/AreaGet"
+  CategoryPost:
+    type: object
+    properties:
+      name:
+        type: string
+        example: Meeting Room
+      is_active:
+        type: boolean
+        example: "true"
+      open_time:
+        type: string
+        example: "07:00"
+      close_time:
+        type: string
+        example: "17:00"
+      time_span:
+        type: integer
+        example: 30
+      available_days:
+        type: array
+        items:
+          type: string
+        example:
+          - "Mon"
+          - "Tue"
+          - "Wed"
+          - "Thu"
+          - "Fri"
+      area_id:
+        type: array
+        items:
+          type: string
+        example:
+          - "61896ed633fa6f555e7c5c1c"
+  SiteGet:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: "61896e3233fa6f555e7c5c08"
+      name:
+        type: string
+        example: "AFZ-F31"
+      country:
+        $ref: "#/definitions/CountryGet"
+      is_active:
+        type: boolean
+        example: true
+  SitePost:
+    type: object
+    required:
+      - "name"
+      - "country_id"
+    properties:
+      name:
+        type: string
+        example: "AFZ-F31"
+      country_id:
+        type: string
+        example: "61896e3233fa6f555e7c5c08"
+      is_active:
+        type: boolean
+        example: true
+  ItemGet:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: "6218dfd489c57040fd9e8087"
+      capacity:
+        type: number
+        example: 5
+      is_active:
+        type: boolean
+      name:
+        type: string
+        example: "Item 001"
+      category:
+        $ref: "#/definitions/CategoryGet"
+      area:
+        $ref: "#/definitions/AreaGet"
+  ItemPost:
+    type: object
+    required:
+      - "name"
+      - "category_id"
+    properties:
+      capacity:
+        type: number
+      category_id:
+        type: string
+        example: "6218d97389c57040fd9e8085"
+      area_id:
+        type: string
+        example: "61896ed633fa6f555e7c5c1c"
+      is_active:
+        type: boolean
+      name:
+        type: string
+        example: "Red Cubes"
+  BookingPost:
+    type: object
+    required:
+      - "requesterId"
+      - "booking_date"
+      - "booking_time"
+      - "item_id"
+      - "comment"
+    properties:
+      requesterId:
+        type: string
+        example: "0002727"
+      booking_date:
+        type: string
+        example: "2022-03-09"
+      booking_time:
+        type: array
+        items: 
+          type: string
+        example: ["08:00-09:00"]
+      user_id: 
+        type: string
+        example: "6222352171d94544b04a3675"
+      item_id:
+        type: string
+        example: "621e6bb6254b93dcc6e3ff86"
+      comment:
+        type: string
+        example: "very important comment"
+  TimeGet:
+    type: object
+    required:
+      - "id"
+      - "date"
+    properties:
+      id:
+        type: string
+        example: "6218dfd489c57040fd9e8087"
+      date:
+        type: string
+        example: "2022-03-04"
+  BookingGet:
+    type: object
+    properties:
+      _id:
+        type: string
+        example: "6218e188cbcc9aba7e3d329f"
+      status:
+        type: string
+        example: "C"
+      booking_date:
+        type: string
+        example: "2022-02-28"
+      booking_time:
+        type: array
+        items: 
+          type: string
+        example:  ["07:00-08:00"]
+      requesterId:
+        type: string
+        example: ""
+      comment:
+        type: string
+        example: "test"
+      user:
+        $ref: "#/definitions/UserGet"
+      details:
+        type: object
+        properties:
+          country:
+            $ref: "#/definitions/CountryGet"
+          site: 
+            $ref: "#/definitions/SiteGet"
+          area:
+            $ref: "#/definitions/AreaGet"
+          category:
+            $ref: "#/definitions/CategoryGet"
+          item:
+            $ref: "#/definitions/ItemGet"
+  BookingPut:
+    type: object
+    properties:
+      status:
+        type: string
+        example: "B"
+      booking_time:
+        type: array
+        items: 
+          type: string
+        example:  ["07:00-08:00"]
+  UserGet: 
+    type: object
+    properties:
+      _id:
+        type: string
+        example: "6222352171d94544b04a3675"
+      name: 
+        type: string
+        example: "User Name"
+paths:
+  /country:
+    get:
+      tags:
+        - "Country"
+      summary: "Get list of all countries"
+      description: "Get list of all countries"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of countries"
+          schema:
+            $ref: "#/definitions/Response"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    post:
+      tags:
+        - "Country"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Country object that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/CountryPost"
+      summary: "Create a Country"
+      description: "Create a Country"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "201":
+          description: "Country succesfully created"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CountryGet"
+                  message:
+                    example: "Country successfully created"
+                  message_code:
+                    example: "COUNTRY_SUCCESSFULLY_CREATED"
+        "409":
+          description: "Country already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Country aready exist"
+                  message_code:
+                    example: "COUNTRY_ALREADY_EXIST"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /country/{countryId}:
+    get:
+      tags:
+        - "Country"
+      summary: "Find country by ID"
+      description: "Returns a single country"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "countryId"
+          in: "path"
+          description: "ID of country to return"
+          required: true
+          type: "string"
+          format: "string"
+      responses:
+        "200":
+          description: "Get single country successfully"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CountryGet"
+        "404":
+          description: "Country not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Country not found"
+                  message_code:
+                    example: "COUNTRY_ITEM_NOT_FOUND"
+        "422":
+          description: "Invalid Object Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    put:
+      tags:
+        - "Country"
+      summary: "Update country by ID"
+      description: "Returns an updated country"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "countryId"
+          in: "path"
+          description: "ID of country to update"
+          required: true
+          type: "string"
+          format: "string"
+      responses:
+        "200":
+          description: "Country successfully updated"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CountryGet"
+                  message:
+                    example: "Country successfully updated"
+                  message_code:
+                    example: "COUNTRY_SUCCESSFULLY_UPDATED"
+        "404":
+          description: "Country not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Country not found"
+                  message_code:
+                    example: "COUNTRY_ITEM_NOT_FOUND"
+        "409":
+          description: "Country already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Country aready exist"
+                  message_code:
+                    example: "COUNTRY_ALREADY_EXIST"
+        "422":
+          description: "Invalid Object Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    delete:
+      tags:
+        - "Country"
+      summary: "Delete country by ID"
+      description: "Returns a deleted country"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "countryId"
+          in: "path"
+          description: "ID of country to delete"
+          required: true
+          type: "string"
+          format: "string"
+      responses:
+        "200":
+          description: "Country successfully deleted"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CountryGet"
+                  message:
+                    example: "Country successfully deleted"
+                  message_code:
+                    example: "COUNTRY_SUCCESSFULLY_DELETED"
+        "404":
+          description: "Country not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Country not found"
+                  message_code:
+                    example: "COUNTRY_ITEM_NOT_FOUND"
+        "409":
+          description: "Country has relationships with some sites"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Country cannot be deleted, has relationships with some sites"
+                  message_code:
+                    example: "COUNTRY_DELETE_HAS_RELATIONS"
+        "422":
+          description: "Invalid Object Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /area:
+    get:
+      tags:
+        - "Area"
+      summary: "Get list of all areas"
+      description: "Get list of all areas"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of areas"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    items:
+                      $ref: "#/definitions/AreaGet"
+                  message:
+                    example: "Successfully requested"
+                  message_code:
+                    example: "OK_MSG"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+
+    post:
+      tags:
+        - "Area"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Area object that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/AreaPost"
+      summary: "Create an Area"
+      description: "Create an Area"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "201":
+          description: "Area succesfully created"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/AreaGet"
+                  message:
+                    example: "Area successfully created"
+                  message_code:
+                    example: "AREA_SUCCESSFULLY_CREATED"
+        "409":
+          description: "Area already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Area aready exist for the selected site"
+                  message_code:
+                    example: "AREA_ALREADY_EXIST"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /area/{areaId}:
+    get:
+      parameters:
+        - name: "areaId"
+          in: "path"
+          description: "ID of area to return"
+          required: true
+          type: "string"
+          format: "string"
+      tags:
+        - "Area"
+      summary: "Get an area based on its ID"
+      description: "Get an area based on its ID"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "An area"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/AreaGet"
+                  message:
+                    example: "Successfully requested"
+                  message_code:
+                    example: "OK_MSG"
+        "404":
+          description: "Area not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Area not found"
+                  message_code:
+                    example: "AREA_ITEM_NOT_FOUND"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    put:
+      tags:
+        - "Area"
+      parameters:
+        - name: "areaId"
+          in: "path"
+          description: "ID of area to update"
+          required: true
+          type: "string"
+          format: "string"
+        - in: "body"
+          name: "body"
+          description: "Area object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/AreaPost"
+      summary: "Update an Area"
+      description: "Update an Area"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "An updated area"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/AreaGet"
+                  message:
+                    example: "Area successfully updated"
+                  message_code:
+                    example: "AREA_SUCCESSFULLY_UPDATED"
+        "409":
+          description: "Area already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Area aready exist for the selected site"
+                  message_code:
+                    example: "AREA_ALREADY_EXIST"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+
+        "422":
+          description: "Invalid Id"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Invalid Id"
+                  message_code:
+                    example: "INVALID_ID"
+    delete:
+      tags:
+        - "Area"
+      parameters:
+        - name: "areaId"
+          in: "path"
+          description: "ID of area to delete"
+          required: true
+          type: "string"
+          format: "string"
+      summary: "Delete an Area"
+      description: "Delete an Area"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A deleted area"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/AreaGet"
+                  message:
+                    example: "Area successfully deleted"
+                  message_code:
+                    example: "AREA_SUCCESSFULLY_DELETED"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+
+        "422":
+          description: "Invalid Id"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Invalid Id"
+                  message_code:
+                    example: "INVALID_ID"
+  /area_by_all_filters:
+    get:
+      tags:
+        - "Area"
+      parameters:
+        - in: query
+          name: "country_id"
+          description: "Country Id"
+          type: string
+        - in: query
+          name: "site_id"
+          description: "Site Id"
+          type: string
+      summary: "Get list of all areas by all filters"
+      description: "Get list of all areas by all filters"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of areas"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    items:
+                      $ref: "#/definitions/AreaGet"
+                  message:
+                    example: "Successfully requested"
+                  message_code:
+                    example: "OK_MSG"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /category:
+    get:
+      tags:
+        - "Category"
+      summary: "Get list of all categories"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of categories"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/definitions/CategoryGet"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    post:
+      tags:
+        - "Category"
+      summary: "Create a category"
+      description: "Create a category"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Category object that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/CategoryPost"
+      responses:
+        "200":
+          description: "Category created successfully"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CategoryGet"
+                  message:
+                    example: "Category created successfully"
+                  message_code:
+                    example: "CATEGORY_SUCCESSFULLY_CREATED"
+        "409":
+          description: "Category already exists for the selected area"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Category already exists for the selected area"
+                  message_code:
+                    example: "CATEGORY_ALREADY_EXIST"
+        "422 case 1":
+          description: "One or more days are invalid"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "One or more days are invalid"
+                  message_code:
+                    example: "CATEGORY_DAYS_INVALID"
+        "422 case 2":
+          description: "Open time can not be higher than close time"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Open time can not be higher than close_time"
+                  message_code:
+                    example: "CATEGORY_OPEN_TIME_HIGHER"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /category/{categoryId}:
+    get:
+      tags:
+        - "Category"
+      summary: "Find category by ID"
+      description: "Returns a single category"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "categoryId"
+          in: path
+          description: "ID of category to return"
+          required: true
+          type: string
+          format: string
+      responses:
+        "200":
+          description: "Get single category successfully"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CategoryGet"
+        "404":
+          description: "Country not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Category not found"
+                  message_code:
+                    example: "CATEGORY_ITEM_NOT_FOUND"
+        "422":
+          description: "Invalid Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    put:
+      tags:
+        - "Category"
+      summary: "Update category by ID"
+      description: "Returns an updated category"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "categoryId"
+          in: path
+          description: "ID of category to update"
+          required: true
+          type: string
+          format: string
+      responses:
+        "200":
+          description: "Category successfully updated"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CategoryGet"
+                  message:
+                    example: "Category updated successfully"
+                  message_code:
+                    example: "CATEGORY_SUCCESSFULLY_UPDATED"
+        "404":
+          description: "Country not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Category not found"
+                  message_code:
+                    example: "CATEGORY_ITEM_NOT_FOUND"
+        "409":
+          description: "Category already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Category already exists for the selected area"
+                  message_code:
+                    example: "CATEGORY_ALREADY_EXIST"
+        "422 case 1":
+          description: "Invalid ID"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "422 case 2":
+          description: "One or more days are invalid"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "One or more days are invalid"
+                  message_code:
+                    example: "CATEGORY_DAYS_INVALID"
+        "422 case 3":
+          description: "Open time can not be higher than close time"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Open time can not be higher than close_time"
+                  message_code:
+                    example: "CATEGORY_OPEN_TIME_HIGHER"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    delete:
+      tags:
+        - "Category"
+      summary: "Delete category by ID"
+      description: "Delete category by ID"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "categoryId"
+          in: path
+          description: "ID of category to delete"
+          required: true
+          type: string
+          format: string
+      responses:
+        "200":
+          description: "Category successfully deleted"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CategoryGet"
+                  message:
+                    example: "Category deleted successfully"
+                  message_code:
+                    example: "CATEGORY_SUCCESSFULLY_DELETED"
+        "404":
+          description: "Category not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Category not found"
+                  message_code:
+                    example: "CATEGORY_ITEM_NOT_FOUND"
+        "409":
+          description: "Category cannot be deleted, has relationships with some items"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Category cannot be deleted, has relationships with some items"
+                  message_code:
+                    example: "AREA_DELETE_HAS_RELATIONS"
+        "422":
+          description: "Invalid ID"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /category_by_all_filters:
+    get:
+      tags:
+        - "Category"
+      summary: "Find categories by filters"
+      description: "Returns all categories that comply with the filters"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "country_id"
+          in: query
+          description: "ID of country to filter"
+          required: true
+          type: string
+          format: string
+        - name: "site_id"
+          in: query
+          description: "ID of site to filter"
+          required: true
+          type: string
+          format: string
+        - name: "area_id"
+          in: query
+          description: "ID of area to filter"
+          required: true
+          type: array
+          items:
+            type: string
+          collectionFormat: multi
+      responses:
+        "200":
+          description: "A list of categories"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/definitions/CategoryGet"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /site:
+    get:
+      tags:
+        - "Site"
+      summary: "Get list of all sites"
+      description: "Get list of all sites and inserts a site"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of sites"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/definitions/SiteGet"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    post:
+      tags:
+        - "Site"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Site object that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/SitePost"
+      summary: "Create a Site"
+      description: "Create a Site"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "201":
+          description: "Site succesfully created"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/SiteGet"
+                  message:
+                    example: "Site successfully created"
+                  message_code:
+                    example: "SITE_SUCCESSFULLY_CREATED"
+        "409":
+          description: "Site already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "site aready exist"
+                  message_code:
+                    example: "SITE_ALREADY_EXIST"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /site/{siteId}:
+    get:
+      tags:
+        - "Site"
+      summary: "Find site by ID"
+      description: "Returns a single site"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "siteId"
+          in: "path"
+          description: "ID of site to return"
+          required: true
+          type: "string"
+          format: "string"
+      responses:
+        "200":
+          description: "Get single site successfully"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/SiteGet"
+        "404":
+          description: "Site not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Site not found"
+                  message_code:
+                    example: "SITE_NOT_FOUND"
+        "422":
+          description: "Invalid Object Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    put:
+      tags:
+        - "Site"
+      summary: "Update site by ID"
+      description: "Update a single site"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "siteId"
+          in: "path"
+          description: "ID of site to update"
+          required: true
+          type: "string"
+          format: "string"
+        - in: "body"
+          name: "body"
+          description: "Site object that needs to be updated"
+          required: true
+          schema:
+            $ref: "#/definitions/SitePost"
+      responses:
+        "200":
+          description: "Site successfully updated"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/SiteGet"
+                  message:
+                    example: "Site successfully updated"
+                  message_code:
+                    example: "SITE_SUCCESSFULLY_UPDATED"
+        "404":
+          description: "Site not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Site not found"
+                  message_code:
+                    example: "SITE_NOT_FOUND"
+        "409":
+          description: "Site aready exist for the selected country"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Site aready exist for the selected country"
+                  message_code:
+                    example: "SITE_ALREADY_EXIST"
+        "422":
+          description: "Invalid Object Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    delete:
+      tags:
+        - "Site"
+      summary: "Delete site by ID"
+      description: "Delete a single site"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "siteId"
+          in: "path"
+          description: "ID of site to delete"
+          required: true
+          type: "string"
+          format: "string"
+      responses:
+        "200":
+          description: "Site successfully deleted"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/CountryGet"
+                  message:
+                    example: "Site successfully deleted"
+                  message_code:
+                    example: "SITE_SUCCESSFULLY_DELETED"
+        "404":
+          description: "Site not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Site not found"
+                  message_code:
+                    example: "SITE_NOT_FOUND"
+        "409":
+          description: "Country has relationships with some areas"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Site cannot be deleted, has relationships with some areas"
+                  message_code:
+                    example: "SITE_DELETE_HAS_RELATIONS"
+        "422":
+          description: "Invalid Object Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /site_by_all_filters:
+    get:
+      tags:
+        - "Site"
+      parameters:
+        - in: query
+          name: "country_id"
+          description: "Country Id"
+          type: string
+      summary: "Get list of all sites by all filters"
+      description: "Get list of all sites by all filters"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of sites"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    items:
+                      $ref: "#/definitions/SiteGet"
+                  message:
+                    example: "Successfully requested"
+                  message_code:
+                    example: "OK_MSG"
+        "422":
+          description: "Invalid Object Id"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /item:
+    get:
+      tags:
+        - "Item"
+      summary: "Get list of new item, space and office utility available to book in the site"
+      description: "A list of new item, space and office utility available to book in the site"
+      consumes:
+        - "application/json"
+      responses:
+        "200":
+          description: "Items succesfully requested"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/definitions/ItemGet"
+                  message:
+                    example: "Item successfully requested"
+                  message_code:
+                    example: "ITEM_SUCCESSFULLY_REQUESTED"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    post:
+      tags:
+        - "Item"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Office item, space and utilities that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/ItemPost"
+      summary: "Post a new item, space and office utilities available to book in the site"
+      description: "Modify a new item, space and office utility"
+      consumes:
+        - "application/json"
+      responses:
+        "201":
+          description: "Item succesfully created"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/ItemGet"
+                  message:
+                    type: string
+                    example: "Item successfully created"
+                  message_code:
+                    type: string
+                    example: "ITEM_SUCCESSFULLY_CREATED"
+        "409":
+          description: "Iteam already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Item aready exist"
+                  message_code:
+                    example: "ITEM_ALREADY_EXIST"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /item/{itemId}:
+    get:
+      tags:
+        - "Item"
+      summary: "Find item by ID"
+      description: "Return a single item"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "itemId"
+          in: "path"
+          description: "ID of item to return"
+          required: true
+          type: "string"
+      responses:
+        "201":
+          description: "Item successfully requested"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/ItemGet"
+                  message:
+                    type: string
+                    example: "Item successfully requested"
+                  message_code:
+                    type: string
+                    example: "ITEM_SUCCESSFULLY_REQUESTED"
+        "404":
+          description: "Item not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    type: string
+                    example: "Item not found"
+                  message_code:
+                    type: string
+                    example: "ITEM_NOT_FOUND"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    put:
+      tags:
+        - "Item"
+      summary: "Modify a item by ID"
+      description: "Change a item by ID"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "itemId"
+          type: string
+          description: "Item ID to be modify"
+          required: true
+        - in: "body"
+          name: "body"
+          description: "Changes on item"
+          required: true
+          schema:
+            $ref: "#/definitions/ItemPost"
+      responses:
+        "200":
+          description: "Item successfully created"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/ItemGet"
+                  message:
+                    type: string
+                    example: "Item successfully modified"
+                  message_code:
+                    type: string
+                    example: "ITEM_SUCCESSFULLY_MODIFIED"
+        "404":
+          description: "Item not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    type: string
+                    example: "Item not found"
+                  message_code:
+                    type: string
+                    example: "ITEM_NOT_FOUND"
+        "409":
+          description: "Item already exists"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  data:
+                    type: object
+                    example: null
+                  message:
+                    type: string
+                    example: "Item already exists"
+                  message_code:
+                    type: string
+                    example: "ITEM_ALREADY_EXISTS"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    delete:
+      tags:
+        - "Item"
+      summary: "Delete an item by ID"
+      description: "Delete an item by id"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "itemId"
+          type: string
+          description: "Item ID to be deleted"
+          required: true
+      responses:
+        "200":
+          description: "Item successfully deleted"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/ItemGet"
+                  message:
+                    type: string
+                    example: "Item successfully deleted"
+                  message_code:
+                    type: string
+                    example: "ITEM_SUCCESSFULLY_DELETED"
+        "422":
+          description: "Unprocessable entity with Invalid ID"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "404":
+          description: "Item not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    type: string
+                    example: "Item not found"
+                  message_code:
+                    type: string
+                    example: "ITEM_NOT_FOUND"
+
+  /item_by_all_filters:
+    get:
+      tags:
+        - "Item"
+      parameters:
+        - in: "query"
+          type: string
+          name: "country_id"
+          description: "The country to filter item(s)"
+          required: true
+        - in: "query"
+          type: string
+          name: "site_id"
+          description: "The country to filter item(s)"
+          required: true
+        - in: "query"
+          type: array
+          items:
+            type: string
+          name: "area_id"
+          description: "The country to filter item(s)"
+          required: true
+        - in: "query"
+          type: array
+          items:
+            type: string
+          name: "category_id"
+          description: "The country to filter item(s)"
+          required: true
+        - in: "query"
+          type: string
+          name: "booking_date"
+          description: "The country to filter item(s)"
+          required: true
+      summary: "Filter a list of office items or spaces"
+      description: "A list of items filtered by country, site, area, category and booking date"
+      consumes:
+        - "application/json"
+      responses:
+        "200":
+          description: "Items successfully requested"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/definitions/ItemGet"
+                  message:
+                    example: "Item successfully filtered"
+                  message_code:
+                    example: "ITEM_SUCCESSFULLY_FILTERED"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /booking:
+    get:
+      tags:
+        - "Booking"
+      summary: "Returns a list of booking elements"
+      description: "Returns a list of booking elements"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of booked items"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/definitions/BookingGet"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    post:
+      tags:
+        - "Booking"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Booking data to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/BookingPost"
+      summary: "Creates a booking element"
+      description: "Makes a reservation"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "201":
+          description: "Confirmation of booking created"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    example: null
+                  message:
+                    example: "Booking created successfully"
+                  message_code:
+                    example: "BOOKING_CREATED"
+        "404 case 1":
+          description: "Item not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Item not found"
+                  message_code:
+                    example: "BOOKING_ITEM_NOT_FOUND"
+        "404 case 2":
+          description: "User not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "User not found"
+                  message_code:
+                    example: "BOOKING_USER_NOT_FOUND"
+        "409 case 1":
+          description: "Item has conflicts with parent relationships"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Item has conflicts with parent relationships"
+                  message_code:
+                    example: "BOOKING_ITEM_RELATION_CONFLICT"
+        "409 case 2":
+          description: "Item not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Item is not available in the selected day"
+                  message_code:
+                    example: "BOOKING_ITEM_NOT_AVAIL_DAY"
+        "409 case 3":
+          description: "One or more times are lower than the current time"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "One or more times are lower than the current time"
+                  message_code:
+                    example: "BOOKING_TIME_LOWER_THAN_ACTUAL"
+        "409 case 4":
+          description: "Some selected times are not available"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Some selected times are not available"
+                  message_code:
+                    example: "BOOKING_TIMES_NOT_AVAIL"
+        "422 case 1":
+          description: "Invalid item id error"
+          schema:
+            allOf:
+              - $ref: "#/definitions/InvalidIdErrorResponse"
+              - properties:
+                  message:
+                    example: "Invalid Item Id"
+        "422 case 2":
+          description: "Invalid user id error"
+          schema:
+            allOf:
+              - $ref: "#/definitions/InvalidIdErrorResponse"
+              - properties:
+                  message:
+                    example: "Invalid User Id"
+        "422 case 3":
+          description: "Date must be equal or greater than today"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Date must be equal or greater than today"
+                  message_code:
+                    example: "BOOKING_DATE_INVALID"
+        "422 case 4":
+          description: "Date must be equal or greater than today"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Date must be equal or greater than today"
+                  message_code:
+                    example: "BOOKING_DATE_INVALID"
+        "422 case 5":
+          description: "Unprocessable entity"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "One or more time ranges do not have the correct format"
+                  message_code:
+                    example: "BOOKING_INVALID_TIME_RANGE"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /booking_available_times:
+    get:
+      tags:
+        - "Booking"
+      summary: "Returns a list of available times for reservations"
+      description: "Returns a list of available times for reservations"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "item data"
+          required: true
+          schema:
+            $ref: "#/definitions/TimeGet"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "A list of possible booking times" 
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    type: object
+                    properties:
+                      time:
+                        type: array
+                        items:
+                          type: string
+                        example: [
+                          "08:00-09:00", 
+                          "09:00-10:00", 
+                          "10:00-11:00", 
+                          "11:00-12:00", 
+                          "12:00-13:00", 
+                          "13:00-14:00", 
+                          "14:00-15:00", 
+                          "15:00-16:00", 
+                          "16:00-17:00", 
+                          "17:00-18:00"
+                        ]
+        "404":
+          description: "Item not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Item not found"
+                  message_code:
+                    example: "BOOKING_ITEM_NOT_FOUND"
+        "422":
+          description: "Invalid id error"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+  /booking/{bookingId}:
+    get:
+      tags:
+        - "Booking"
+      summary: "Returns booking data based on id value"
+      description: "Returns booking data based on id value"
+      parameters:
+        - name: "bookingId"
+          in: "path"
+          description: "ID of booking to return"
+          required: true
+          type: "string"
+          format: "string"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Booking item data"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/BookingGet"
+        "404":
+          description: "Booking not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Booking not found"
+                  message_code:
+                    example: "BOOKING_NOT_FOUND"
+        "422":
+          description: "Invalid id error"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: "Internal Server Error"
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+    put:
+      tags:
+        - "Booking"
+      summary: "Changes the booking status to cancelled"
+      description: "Changes the booking status to cancelled"
+      parameters:
+        - name: "bookingId"
+          in: "path"
+          description: "ID of booking to return"
+          required: true
+          type: "string"
+          format: "string"
+        - in: "body"
+          name: "body"
+          description: "Booking status"
+          required: true
+          schema:
+            $ref: "#/definitions/BookingPut"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Booking item data"
+          schema:
+            allOf:
+              - $ref: "#/definitions/Response"
+              - properties:
+                  data:
+                    $ref: "#/definitions/BookingGet"
+                  message:
+                    example: "Booking updated successfully"
+                  message_code:
+                    example: "BOOKING_UPDATED" 
+        "404":
+          description: "Booking not found"
+          schema:
+            allOf:
+              - $ref: "#/definitions/ErrorResponse"
+              - properties:
+                  message:
+                    example: "Booking not found"
+                  message_code:
+                    example: "BOOKING_NOT_FOUND"
+        "422":
+          description: "Invalid id error"
+          schema:
+            $ref: "#/definitions/InvalidIdErrorResponse"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/InternalErrorResponse"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

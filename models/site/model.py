@@ -28,7 +28,7 @@ class SiteModel():
 
     @classmethod
     def get_by_id(cls, id):
-        values_dict = {"_id":ObjectId(id)}
+        values_dict = {"id":ObjectId(id)}
         response = __site__.get_data(values_dict=values_dict, lookups=[SiteModel.__country_lookup], with_unwind=True, with_preserve=False)
         if response is None: 
             return None
@@ -92,7 +92,7 @@ class SiteModel():
         self.__dict__.update(**site)
         return __site__.update_data(
             {
-                "_id": ObjectId(self._id)
+                "id": ObjectId(self._id)
             },
             {
                 "name": self.name,
@@ -104,7 +104,7 @@ class SiteModel():
     def delete_site(self):
         return __site__.delete_data(
             {
-                "_id": ObjectId(self._id)
+                "id": ObjectId(self._id)
             }
         )
 

@@ -162,7 +162,7 @@ class BookingModel():
 
     @classmethod
     def get_by_id(cls, id):
-        values_dict = {"_id": ObjectId(id)}
+        values_dict = {"id": ObjectId(id)}
         response = __booking__.get_data(
             values_dict=values_dict, extra_params=BookingModel.__booking_group__, with_unwind=False)
         if response is None:
@@ -207,7 +207,7 @@ class BookingModel():
         self.__dict__.update(**booking)
         return __booking__.update_data(
             {
-                "_id": ObjectId(self._id)
+                "id": ObjectId(self._id)
             },
             {
                 "status": self.status,
@@ -227,7 +227,7 @@ class BookingModel():
     def delete_booking(self):
         return __booking__.delete_data(
             {
-                "_id": ObjectId(self._id)
+                "id": ObjectId(self._id)
             }
         )
 

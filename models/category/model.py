@@ -32,7 +32,7 @@ class CategoryModel():
     __area_group = {
         "$group":{
             "id": "$_id",
-            "area_id": {
+            "area_ids": {
                 "$push":"$area_id"
             },
             "document": {
@@ -46,7 +46,7 @@ class CategoryModel():
             "newRoot": {
                 "$mergeObjects": [
                     "$document",
-                    {"area_id": "$area_id"}
+                    {"area_ids": "$area_id"}
                 ]
             }
         }
@@ -96,23 +96,23 @@ class CategoryModel():
         match_values["$and"] = [{}]
         area_value = dict()
        
-        if dict_match.get("area_id"):
-            if len(dict_match.get("area_id")) > 1:
+        if dict_match.get("area_ids"):
+            if len(dict_match.get("area_ids")) > 1:
                 area_value["$or"] = []
-                for area in dict_match.get("area_id"):
+                for area in dict_match.get("area_ids"):
                     area_tmp = area_value["$or"]
                     area_tmp.append({"area_id._id": ObjectId(area)})
                     area_value["$or"] = area_tmp
                 match_values['$and'].append(area_value)
             else:
                 match_values["area_id._id"] = ObjectId(
-                    dict_match["area_id"][0])
+                    dict_match["area_ids"][0])
 
         if dict_match.get("site_id"):
            match_values["area_id.site_id._id"] = ObjectId(dict_match["site_id"]) 
         
-        # if dict_match.get("area_id"):
-        #     match_values["area_id._id"] = ObjectId(dict_match["area_id"])
+        # if dict_match.get("area_ids"):
+        #     match_values["area_id._id"] = ObjectId(dict_match["area_ids"])
 
         if dict_match.get("country_id"):
             match_values["area_id.site_id.country_id._id"] = ObjectId(dict_match["country_id"])
@@ -160,7 +160,7 @@ class CategoryModel():
             "is_active": self.is_active,
             "close_time": self.close_time,
             "open_time": self.open_time,
-            "area_id": [ObjectId(area) for area in self.area_id],
+            "area_ids": [ObjectId(area) for area in self.area_id],
             "time_span": self.time_span,
             "available_days": self.available_days
         })
@@ -177,7 +177,7 @@ class CategoryModel():
                 "is_active": self.is_active,
                 "close_time": self.close_time,
                 "open_time": self.open_time,
-                "area_id": [ObjectId(_id) for _id in self.area_id],
+                "area_ids": [ObjectId(_id) for _id in self.area_id],
                 "time_span": self.time_span,
                 "available_days": self.available_days
             }

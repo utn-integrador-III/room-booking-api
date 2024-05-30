@@ -198,7 +198,7 @@ class BookingModel():
                 "site_id": ObjectId(self.details.site),
                 "area_id": ObjectId(self.details.area),
                 "category_id": ObjectId(self.details.category),
-                "item_ids": ObjectId(self.details.item),
+                "item_id": ObjectId(self.details.item),
             },
         })
         self._id = response.inserted_id
@@ -219,7 +219,7 @@ class BookingModel():
                     "site_id": ObjectId(self.details.site._id),
                     "area_id": ObjectId(self.details.area._id),
                     "category_id": ObjectId(self.details.category._id),
-                    "item_ids": ObjectId(self.details.item._id),
+                    "item_id": ObjectId(self.details.item._id),
                 }, 
             }
         )

@@ -96,17 +96,17 @@ class CategoryModel():
         match_values["$and"] = [{}]
         area_value = dict()
        
-        if dict_match.get("area_ids"):
-            if len(dict_match.get("area_ids")) > 1:
+        if dict_match.get("area_id"):
+            if len(dict_match.get("area_id")) > 1:
                 area_value["$or"] = []
-                for area in dict_match.get("area_ids"):
+                for area in dict_match.get("area_id"):
                     area_tmp = area_value["$or"]
                     area_tmp.append({"area_id._id": ObjectId(area)})
                     area_value["$or"] = area_tmp
                 match_values['$and'].append(area_value)
             else:
                 match_values["area_id._id"] = ObjectId(
-                    dict_match["area_ids"][0])
+                    dict_match["area_id"][0])
 
         if dict_match.get("site_id"):
            match_values["area_id.site_id._id"] = ObjectId(dict_match["site_id"]) 

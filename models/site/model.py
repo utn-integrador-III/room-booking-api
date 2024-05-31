@@ -52,8 +52,8 @@ class SiteModel():
         list_items = []
         match_values = dict()
         
-        if dict_match.get("country_ids"):
-            match_values["country_id._id"] = ObjectId(dict_match["country_ids"])
+        if dict_match.get("country_id"):
+            match_values["country_id._id"] = ObjectId(dict_match["country_id"])
             
         match_values["is_active"] = True
 

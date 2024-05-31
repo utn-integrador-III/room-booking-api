@@ -27,15 +27,15 @@ class CountryModel():
         return list_countries
 
     @classmethod
-    def delete_by_id(self, id):
+    def delete_by_id(self, _id):
         __country__.delete_by_id({
-            "id": ObjectId(id)
+            "_id": ObjectId(_id)
         })
         return True
 
     @classmethod
-    def get_by_id(cls, id):
-        values_dict = {"id": ObjectId(id)}
+    def get_by_id(cls, _id):
+        values_dict = {"_id": ObjectId(_id)}
         response = __country__.get_data(values_dict=values_dict)
         if response is None:
             return None
@@ -71,7 +71,7 @@ class CountryModel():
         self.__dict__.update(**country)
         return __country__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "name": self.name,
@@ -83,7 +83,7 @@ class CountryModel():
     def delete_country(self):
         return __country__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

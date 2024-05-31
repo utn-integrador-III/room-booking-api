@@ -75,13 +75,13 @@ class AreaModel():
     @classmethod
     def delete_by_id(self, id):
         __area__.delete_by_id({
-            "id": ObjectId(id)
+            "_id": ObjectId(id)
         })
         return True
     
     @classmethod
     def get_by_id(cls, id):
-        values_dict = {"id":ObjectId(id)}
+        values_dict = {"_id":ObjectId(id)}
         response = __area__.get_data(values_dict=values_dict,lookups=AreaModel.__relations_lookups_list, 
                                      with_unwind=True, with_preserve=False)
         if response is None: 
@@ -116,7 +116,7 @@ class AreaModel():
         self.__dict__.update(**area)
         return __area__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "floor": self.floor,
@@ -129,7 +129,7 @@ class AreaModel():
     def delete_area(self):
         return __area__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

@@ -121,13 +121,13 @@ class SiteModel():
             }
             values_dict["name"] = query
 
-        if  data.get("country_ids"):
+        if  data.get("country_id"):
             query = {
                 '$elemMatch': {
                     '$in': data["country_id"]
                 }
             }
-            values_dict["country_ids"] = query
+            values_dict["country_id"] = query
 
         if  data.get("is_active"):
             query = {

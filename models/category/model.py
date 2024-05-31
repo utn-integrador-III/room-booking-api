@@ -31,7 +31,7 @@ class CategoryModel():
     
     __area_group = {
         "$group":{
-            "id": "$_id",
+            "_id": "$_id",
             "area_ids": {
                 "$push":"$area_id"
             },
@@ -129,8 +129,8 @@ class CategoryModel():
         return list_items
 
     @classmethod
-    def get_by_id(cls, id):
-        values_dict = {"id":ObjectId(id)}
+    def get_by_id(cls, _id):
+        values_dict = {"id":ObjectId(_id)}
         response = __category__.get_data(values_dict=values_dict,lookups=CategoryModel.__relations_lookup_list, 
                                          with_unwind=True, with_preserve=False, extra_params=CategoryModel.__extra_params)
         if response is None: 
@@ -170,7 +170,7 @@ class CategoryModel():
         self.__dict__.update(**category)
         return __category__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "name": self.name,
@@ -186,7 +186,7 @@ class CategoryModel():
     def delete_category(self):
         return __category__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

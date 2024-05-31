@@ -27,8 +27,8 @@ class SiteModel():
         }
 
     @classmethod
-    def get_by_id(cls, _id):
-        values_dict = {"_id":ObjectId(_id)}
+    def get_by_id(cls, id):
+        values_dict = {"id":ObjectId(id)}
         response = __site__.get_data(values_dict=values_dict, lookups=[SiteModel.__country_lookup], with_unwind=True, with_preserve=False)
         if response is None: 
             return None
@@ -52,8 +52,8 @@ class SiteModel():
         list_items = []
         match_values = dict()
         
-        if dict_match.get("country_ids"):
-            match_values["country_id._id"] = ObjectId(dict_match["country_ids"])
+        if dict_match.get("country_id"):
+            match_values["country_id._id"] = ObjectId(dict_match["country_id"])
             
         match_values["is_active"] = True
 
@@ -80,7 +80,7 @@ class SiteModel():
     def insert(self):
         data = {
             "name": self.name,
-            "country_ids": ObjectId(self.country),
+            "country_id": ObjectId(self.country),
             "is_active": self.is_active 
         }
         response = __site__.insert_data(values_dict=data)
@@ -92,11 +92,11 @@ class SiteModel():
         self.__dict__.update(**site)
         return __site__.update_data(
             {
-                "_id": ObjectId(self._id)
+                "id": ObjectId(self._id)
             },
             {
                 "name": self.name,
-                "country_ids": ObjectId(site.country_id),
+                "country_id": ObjectId(site.country_id),
                 "is_active": self.is_active
             }
         )
@@ -104,7 +104,7 @@ class SiteModel():
     def delete_site(self):
         return __site__.delete_data(
             {
-                "_id": ObjectId(self._id)
+                "id": ObjectId(self._id)
             }
         )
 
@@ -121,13 +121,13 @@ class SiteModel():
             }
             values_dict["name"] = query
 
-        if  data.get("country_ids"):
+        if  data.get("country_id"):
             query = {
                 '$elemMatch': {
-                    '$in': data["country_ids"]
+                    '$in': data["country_id"]
                 }
             }
-            values_dict["country_ids"] = query
+            values_dict["country_id"] = query
 
         if  data.get("is_active"):
             query = {

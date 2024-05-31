@@ -80,7 +80,7 @@ class SiteModel():
     def insert(self):
         data = {
             "name": self.name,
-            "country_ids": ObjectId(self.country),
+            "country_id": ObjectId(self.country),
             "is_active": self.is_active 
         }
         response = __site__.insert_data(values_dict=data)
@@ -96,7 +96,7 @@ class SiteModel():
             },
             {
                 "name": self.name,
-                "country_ids": ObjectId(site.country_id),
+                "country_id": ObjectId(site.country_id),
                 "is_active": self.is_active
             }
         )
@@ -124,7 +124,7 @@ class SiteModel():
         if  data.get("country_ids"):
             query = {
                 '$elemMatch': {
-                    '$in': data["country_ids"]
+                    '$in': data["country_id"]
                 }
             }
             values_dict["country_ids"] = query

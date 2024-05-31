@@ -55,8 +55,8 @@ class AreaModel():
         list_items = []
         match_values = dict()
                 
-        if dict_match.get("site_id"):
-            match_values["site_id._id"] = ObjectId(dict_match["site_id"])
+        if dict_match.get("site_ids"):
+            match_values["site_id._id"] = ObjectId(dict_match["site_ids"])
 
         if dict_match.get("country_id"):
             match_values["site_id.country_id._id"] = ObjectId(dict_match["country_id"])
@@ -106,7 +106,7 @@ class AreaModel():
         data = {
             "floor": self.floor,
             "name": self.name,
-            "site_id": ObjectId(self.site),
+            "site_ids": ObjectId(self.site),
             "is_active": bool(self.is_active)
         }
         response = __area__.insert_data(values_dict=data)
@@ -121,7 +121,7 @@ class AreaModel():
             {
                 "floor": self.floor,
                 "name": self.name,
-                "site_id": ObjectId(area.site_id),
+                "site_ids": ObjectId(area.site_id),
                 "is_active": self.is_active
             }
         )

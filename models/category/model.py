@@ -31,7 +31,7 @@ class CategoryModel():
     
     __area_group = {
         "$group":{
-            "_id": "$_id",
+            "id": "$_id",
             "area_ids": {
                 "$push":"$area_id"
             },
@@ -46,7 +46,7 @@ class CategoryModel():
             "newRoot": {
                 "$mergeObjects": [
                     "$document",
-                    {"area_id": "$area_id"}
+                    {"area_ids": "$area_id"}
                 ]
             }
         }

@@ -52,8 +52,8 @@ class SiteModel():
         list_items = []
         match_values = dict()
         
-        if dict_match.get("country_id"):
-            match_values["country_id._id"] = ObjectId(dict_match["country_id"])
+        if dict_match.get("country_ids"):
+            match_values["country_id._id"] = ObjectId(dict_match["country_ids"])
             
         match_values["is_active"] = True
 
@@ -80,7 +80,7 @@ class SiteModel():
     def insert(self):
         data = {
             "name": self.name,
-            "country_id": ObjectId(self.country),
+            "country_ids": ObjectId(self.country),
             "is_active": self.is_active 
         }
         response = __site__.insert_data(values_dict=data)
@@ -96,7 +96,7 @@ class SiteModel():
             },
             {
                 "name": self.name,
-                "country_id": ObjectId(site.country_id),
+                "country_ids": ObjectId(site.country_id),
                 "is_active": self.is_active
             }
         )
@@ -121,13 +121,13 @@ class SiteModel():
             }
             values_dict["name"] = query
 
-        if  data.get("country_id"):
+        if  data.get("country_ids"):
             query = {
                 '$elemMatch': {
-                    '$in': data["country_id"]
+                    '$in': data["country_ids"]
                 }
             }
-            values_dict["country_id"] = query
+            values_dict["country_ids"] = query
 
         if  data.get("is_active"):
             query = {

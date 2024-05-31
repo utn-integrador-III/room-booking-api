@@ -5,7 +5,6 @@ from flask_cors import CORS
 from decouple import config
 from service import addServiceLayer
 
-
 app = Flask(__name__)
 app.debug = config('FLASK_DEBUG', cast=bool)
 api = Api(app)

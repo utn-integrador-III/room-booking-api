@@ -13,14 +13,14 @@ def auth_required(action=None, permission='', with_args=False):
             try:
                 token = request.headers["Authorization"]
             except:
-                return {'message': "Authorization token is required"}, 401
+                return {'message': "Authorization token is requiredSSSSS"}, 401
             try:
                 #Send Permission to verify if the user has authorization
                 body = {'permission': permission}
                 response = requests.post(config('AUTH_API_URL') + config('AUTH_API_PORT') + '/auth/verify_auth', json=body, headers={'Authorization': f'JWT {token}'}, timeout=20)
                 
             except Exception as ex:
-                return {'message': "Error in authentication occurred" + str(ex)}, 500
+                return {'message': "Error in authentication occurredSSSSS" + str(ex)}, 500
             # If status code is 200, user is valid
             if response.status_code == 200:
                 try:

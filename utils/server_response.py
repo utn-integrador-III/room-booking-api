@@ -44,23 +44,23 @@ class ServerResponse(object):
         status = self.status
         if not self.message:
             if  status == StatusCode.OK:
-                self.message = 'Successfully requested'
+                self.message = 'Successfully requestedSSSS'
                 self.message_code = OK_MSG
             elif status == StatusCode.CREATED:
-                self.message = 'Successfully created'
+                self.message = 'Successfully createdSSSS'
                 self.message_code = CREATED_MSG
             elif status == StatusCode.NOT_FOUND:
-                self.message = 'Record not found'
+                self.message = 'Record not foundXXXXX'
                 self.message_code = NOT_FOUND_MSG
             elif status == StatusCode.CONFLICT:
                 self.message = 'Conflict error with the request'
                 self.message_code = CONFLICT_MSG
             elif status == StatusCode.UNPROCESSABLE_ENTITY:
-                self.message = 'Unprocessable entity'
+                self.message = 'Unprocessable entityXXXXX'
                 self.message_code = UNPROCESSABLE_ENTITY_MSG
             elif status == StatusCode.INTERNAL_SERVER_ERROR:
-                self.message = 'Internal server error'
+                self.message = 'Internal server errorYYYYYY'
                 self.message_code = INTERNAL_SERVER_ERROR_MSG
             elif status == StatusCode.TIMEOUT:
-                self.message = 'Server timeout' 
+                self.message = 'Server timeoutYYYYYY' 
                 self.message_code = SERVER_TIMEOUT_MSG

@@ -55,7 +55,7 @@ class ItemModel():
             } if self.area_id else None
         }
         item.pop("area_id")
-        item.pop("category_ids")
+        item.pop("category_id")
         return item
 
     @classmethod
@@ -78,17 +78,17 @@ class ItemModel():
         category_value = dict()
         area_value = dict()
 
-        if dict_match.get("category_ids"):
-            if len(dict_match.get("category_ids")) > 1:
+        if dict_match.get("category_id"):
+            if len(dict_match.get("category_id")) > 1:
                 category_value["$or"] = []
-                for category in dict_match.get("category_ids"):
+                for category in dict_match.get("category_id"):
                     category_tmp = category_value["$or"]
                     category_tmp.append({"category_id._id": ObjectId(category)})
                     category_value["$or"] = category_tmp
                 match_values['$and'].append(category_value)
             else:
                 match_values["category_id._id"] = ObjectId(
-                    dict_match["category_ids"][0])
+                    dict_match["category_id"][0])
 
         if dict_match.get("area_id"):
             if len(dict_match.get("area_id")) > 1:
@@ -131,13 +131,13 @@ class ItemModel():
     @ classmethod
     def delete_by_id(self, id):
         __item__.delete_by_id({
-            "id": ObjectId(id)
+            "_id": ObjectId(id)
         })
         return True
 
     @ classmethod
     def get_by_id(cls, id):
-        values_dict = {"id": ObjectId(id)}
+        values_dict = {"_id": ObjectId(id)}
         response = __item__.get_data(values_dict=values_dict, lookups=[ItemModel.__category_lookup, ItemModel.__area_lookup,
                                                                        ItemModel.__site_lookup, ItemModel.__country_lookup], with_unwind=True, with_preserve=False)
         if response is None:
@@ -161,7 +161,7 @@ class ItemModel():
         data = {
             "area_id": ObjectId(self.area_id),
             "capacity": self.capacity,
-            "category_ids": ObjectId(self.category_id),
+            "category_id": ObjectId(self.category_id),
             "is_active": bool(self.is_active),
             "name": self.name
         }
@@ -172,11 +172,11 @@ class ItemModel():
         self.__dict__.update(**item)
         return __item__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "capacity": self.capacity,
-                "category_ids": ObjectId(self.category_id),
+                "category_id": ObjectId(self.category_id),
                 "area_id": ObjectId(self.area_id),
                 "is_active": self.is_active,
                 "name": self.name
@@ -186,7 +186,7 @@ class ItemModel():
     def delete_item(self):
         return __item__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

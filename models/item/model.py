@@ -131,13 +131,13 @@ class ItemModel():
     @ classmethod
     def delete_by_id(self, id):
         __item__.delete_by_id({
-            "id": ObjectId(id)
+            "_id": ObjectId(id)
         })
         return True
 
     @ classmethod
     def get_by_id(cls, id):
-        values_dict = {"id": ObjectId(id)}
+        values_dict = {"_id": ObjectId(id)}
         response = __item__.get_data(values_dict=values_dict, lookups=[ItemModel.__category_lookup, ItemModel.__area_lookup,
                                                                        ItemModel.__site_lookup, ItemModel.__country_lookup], with_unwind=True, with_preserve=False)
         if response is None:
@@ -172,7 +172,7 @@ class ItemModel():
         self.__dict__.update(**item)
         return __item__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "capacity": self.capacity,
@@ -186,7 +186,7 @@ class ItemModel():
     def delete_item(self):
         return __item__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

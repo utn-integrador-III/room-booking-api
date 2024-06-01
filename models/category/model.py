@@ -129,8 +129,8 @@ class CategoryModel():
         return list_items
 
     @classmethod
-    def get_by_id(cls, id):
-        values_dict = {"id":ObjectId(id)}
+    def get_by_id(cls, _id):
+        values_dict = {"_id":ObjectId(_id)}
         response = __category__.get_data(values_dict=values_dict,lookups=CategoryModel.__relations_lookup_list, 
                                          with_unwind=True, with_preserve=False, extra_params=CategoryModel.__extra_params)
         if response is None: 
@@ -144,7 +144,7 @@ class CategoryModel():
         # Unique name by area relationship
         if area_id:
             in_match = {
-                "$in": [ObjectId(id) for id in area_id]
+                "$in": [ObjectId(_id) for _id in area_id]
             }
             match_dict["area_id._id"] = in_match
         response = __category__.get_data(values_dict=match_dict, lookups=CategoryModel.__relations_lookup_list, 
@@ -170,7 +170,7 @@ class CategoryModel():
         self.__dict__.update(**category)
         return __category__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "name": self.name,
@@ -186,7 +186,7 @@ class CategoryModel():
     def delete_category(self):
         return __category__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

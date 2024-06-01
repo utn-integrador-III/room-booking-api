@@ -161,8 +161,8 @@ class BookingModel():
         return list_bookings
 
     @classmethod
-    def get_by_id(cls, id):
-        values_dict = {"id": ObjectId(id)}
+    def get_by_id(cls, _id):
+        values_dict = {"_id": ObjectId(_id)}
         response = __booking__.get_data(
             values_dict=values_dict, extra_params=BookingModel.__booking_group__, with_unwind=False)
         if response is None:
@@ -171,10 +171,10 @@ class BookingModel():
         return booking
 
     @classmethod
-    def get_relation_booking_item_date_by_item_id(cls, id, date):
+    def get_relation_booking_item_date_by_item_id(cls, _id, date):
         list_bookings = []
         values_dict = {"details.item_id": ObjectId(
-            id), "booking_date": date, "status": "B"}
+            _id), "booking_date": date, "status": "B"}
 
         response = __booking__.get_all_data(
             values_dict=values_dict, extra_params=BookingModel.__booking_group__, with_unwind=False)
@@ -207,7 +207,7 @@ class BookingModel():
         self.__dict__.update(**booking)
         return __booking__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "status": self.status,
@@ -227,7 +227,7 @@ class BookingModel():
     def delete_booking(self):
         return __booking__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

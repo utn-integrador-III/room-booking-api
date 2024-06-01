@@ -28,7 +28,7 @@ class UserModel():
 
     @classmethod
     def get_by_id(cls, id):
-        values_dict = {"id": ObjectId(id)}
+        values_dict = {"_id": ObjectId(id)}
         response = __user__.get_data(
             values_dict=values_dict, with_unwind=False)
         if response is None:
@@ -46,7 +46,7 @@ class UserModel():
         self.__dict__.update(**user)
         return __user__.update_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             },
             {
                 "name": self.name, 
@@ -56,7 +56,7 @@ class UserModel():
     def delete_user(self):
         return __user__.delete_data(
             {
-                "id": ObjectId(self._id)
+                "_id": ObjectId(self._id)
             }
         )
 

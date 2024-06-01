@@ -46,7 +46,7 @@ class CategoryModel():
             "newRoot": {
                 "$mergeObjects": [
                     "$document",
-                    {"area_ids": "$area_id"}
+                    {"area_id": "$area_id"}
                 ]
             }
         }

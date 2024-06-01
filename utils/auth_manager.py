@@ -8,7 +8,7 @@ def auth_required(action=None, permission='', with_args=False):
     def decorator(f):
         @wraps(f)
         def catcher(*args, **kwargs):
-            # Make endpoint in the Auth Service to validate an Auth Token
+            # Make endpoint in the Auth Service to validate an Auth TokenN
             # The endpoint will return details such as User's Account ID
             try:
                 token = request.headers["Authorization"]

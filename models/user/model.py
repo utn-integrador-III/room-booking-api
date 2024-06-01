@@ -27,8 +27,8 @@ class UserModel():
         return list_users
 
     @classmethod
-    def get_by_id(cls, _id):
-        values_dict = {"_id": ObjectId(_id)}
+    def get_by_id(cls, id):
+        values_dict = {"_id": ObjectId(id)}
         response = __user__.get_data(
             values_dict=values_dict, with_unwind=False)
         if response is None:

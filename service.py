@@ -1,4 +1,5 @@
 from flask_restful import Resource
+from controllers.health.controller import HealthController
 from controllers.site.controller import SiteController
 from controllers.site.site_by_id.controller import SiteById
 from controllers.site.site_by_filters.controller import SiteByFilters
@@ -19,6 +20,8 @@ from controllers.booking.booking_by_id.controller import BookingById
 from flask_restful import Api
 
 def addServiceLayer(api: Api):
+    # Health
+    api.add_resource(HealthController, HealthController.route)
     # Site
     api.add_resource(SiteController, SiteController.route)
     api.add_resource(SiteById, SiteById.route)

@@ -18,6 +18,9 @@ SERVER_TIMEOUT_MSG = 'SERVER_TIMEOUT_MSG'
 # Common Validations Messages
 INVALID_ID = 'INVALID_ID' # Invalid Id
 
+# Health Validations Messages
+HEALTH_NOT_FOUND = "HEALTH_NOT_FOUND"  # Health not found
+HEALTH_SUCCESSFULLY = "HEALTH_SUCCESSFULLY"  # Health successfully responded
 
 # Booking Validations Messages
 BOOKING_ITEM_NOT_FOUND = 'BOOKING_ITEM_NOT_FOUND' # Item not found
